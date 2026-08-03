@@ -1,0 +1,49 @@
+{
+  "schemaVersion": "shieldkit-assurance-subject-lock/v1",
+  "subjectId": "shieldkit-sdk/v2-cli-product-20260801",
+  "repository": "git@github.com:toorik2/ShieldKit-SDK.git",
+  "revision": "2ba14fd7d1d5d0acdd49b97ea3ee77b8ab0ea854",
+  "tree": "6023d6504e2958efced6906b34f523eebc5147ce",
+  "authoritativeDocuments": [
+    {
+      "path": "03-create-your-own-pool/docs/protocol/v2-direct/IMPLEMENTATION_PLAN.md",
+      "sha256": "6a61b2c715f0d9437412356f1891c30c3ee28b2694ed0756c228be43769672a8"
+    },
+    {
+      "path": "03-create-your-own-pool/docs/protocol/v2-direct/REQUIREMENT_MATRIX.md",
+      "sha256": "49bf5654add290548c2bc1aa65162a8019533253d69f83f59988da433106668f"
+    },
+    {
+      "path": "03-create-your-own-pool/docs/protocol/v2-direct/END_USER_CLI_ACCEPTANCE.md",
+      "sha256": "5f9f6522e8bf5ade1e09bbd94eb5f84723ddb9b5557879628d31a3f63291707b"
+    },
+    {
+      "path": "03-create-your-own-pool/docs/protocol/v2-direct/IDS_AND_DOMAINS.md",
+      "sha256": "eb0a5c7a14d4ddc44a3d7ace13bdde9fdae70ad551d8ee7eea5935b923bb4549"
+    }
+  ],
+  "historicalInputs": [
+    {
+      "path": "02-use-chipnet-demo-pool/instance.json",
+      "sha256": "20bd632663e843ab9b53d528d390e42ec2048e6109a0d1cd7e77263fb61bd52a",
+      "evidenceClass": "v1-pf7-historical-subject"
+    },
+    {
+      "path": "03-create-your-own-pool/pins/shieldkit-pin-artifacts-v1.manifest.json",
+      "sha256": "b86e743e3dad29e0c0392ca20120423979fa957ee0993d1cd355c08b283f4ba9",
+      "evidenceClass": "v1-hash-integrity-only"
+    },
+    {
+      "path": "03-create-your-own-pool/pins/v2-beta-product-offline-r3.pin.json",
+      "sha256": "fa02f2e85826c96abec918515823da580a436b13b8f49807028ada66aa1536b0",
+      "evidenceClass": "v2-beta-unqualified-input"
+    }
+  ],
+  "supersedingPolicy": {
+    "multiPartyCeremonyRequired": false,
+    "setupTrustReportedSeparately": true,
+    "thirtyDaySoakRequired": false,
+    "liveQualification": "coverage-driven-zero-confirmation",
+    "mainnetAuthorized": false
+  }
+}

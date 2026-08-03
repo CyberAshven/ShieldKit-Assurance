@@ -1,0 +1,149 @@
+{
+  "schemaVersion": "shieldkit-assurance-pack/v1",
+  "packId": "shieldkit/v1-pf7-historical",
+  "packVersion": "1.0.0",
+  "protocolIdentity": "shieldkit-v1-legacy-pf7-read-only",
+  "subject": {
+    "repository": "git@github.com:toorik2/ShieldKit-SDK.git",
+    "revision": "2ba14fd7d1d5d0acdd49b97ea3ee77b8ab0ea854",
+    "tree": "6023d6504e2958efced6906b34f523eebc5147ce",
+    "implementationRoots": [
+      "03-create-your-own-pool/packages/action",
+      "03-create-your-own-pool/packages/prove",
+      "02-use-chipnet-demo-pool"
+    ]
+  },
+  "claims": [
+    {
+      "claimId": "v1.subject.historical-only",
+      "statement": "This pack describes the frozen V1 legacy subject only; it makes no current, V2 Direct, production, release, or migration claim.",
+      "category": "scope",
+      "severity": "high",
+      "applicability": "always",
+      "assumptions": [],
+      "obligationIds": ["v1.subject.lock-and-quarantine"]
+    },
+    {
+      "claimId": "v1.encoding.shst-scar",
+      "statement": "The historical wire boundary is the 80-byte SHST state commitment and the 752-byte SCAR action packet, not SKS2 or SDA2.",
+      "category": "compatibility",
+      "severity": "high",
+      "applicability": "only when interpreting historical V1 bytes",
+      "assumptions": [],
+      "obligationIds": ["v1.encoding.documented"]
+    },
+    {
+      "claimId": "v1.topology.pf7-prep-settle",
+      "statement": "The historical topology is PF7 with seven verifier roles and a preparation transaction followed by a ten-input settlement; it is not the V2 Direct one-settlement topology.",
+      "category": "topology",
+      "severity": "critical",
+      "applicability": "only when interpreting historical V1 construction",
+      "assumptions": [],
+      "obligationIds": ["v1.topology.documented"]
+    },
+    {
+      "claimId": "v1.live-instance.historical",
+      "statement": "The recorded 32-note Chipnet playground is a development-only V1 historical instance and cannot qualify, fall back to, or represent V2 Direct.",
+      "category": "provenance",
+      "severity": "high",
+      "applicability": "only for the recorded V1 playground metadata",
+      "assumptions": [],
+      "obligationIds": ["v1.live-instance.non-promoting"]
+    },
+    {
+      "claimId": "v1.cross-version.refusal",
+      "statement": "V1 profiles, state, packets, setup, artifacts, instances, and live history must be refused rather than converted, relabeled, or migrated as V2 Direct.",
+      "category": "migration",
+      "severity": "critical",
+      "applicability": "always",
+      "assumptions": [],
+      "obligationIds": ["v1.cross-version.refusal"]
+    }
+  ],
+  "obligations": [
+    {
+      "obligationId": "v1.subject.lock-and-quarantine",
+      "claimIds": ["v1.subject.historical-only"],
+      "modality": "provenance",
+      "mandatory": false,
+      "dependencyIds": [],
+      "componentIds": ["v1.subject-source"],
+      "oraclePolicy": {"oracleIds": ["v1.oracle.historical-record"], "minimumIndependent": 0},
+      "evidence": {"qualification": false, "allowSynthetic": false, "requiredArtifacts": ["subjects/shieldkit-sdk-2ba14fd.lock.json", "03-create-your-own-pool/packages/profile/legacy.mjs"], "requiredSignatures": []}
+    },
+    {
+      "obligationId": "v1.encoding.documented",
+      "claimIds": ["v1.encoding.shst-scar"],
+      "modality": "vector",
+      "mandatory": false,
+      "dependencyIds": ["v1.subject.lock-and-quarantine"],
+      "componentIds": ["v1.subject-source"],
+      "oraclePolicy": {"oracleIds": ["v1.oracle.historical-record"], "minimumIndependent": 0},
+      "evidence": {"qualification": false, "allowSynthetic": false, "requiredArtifacts": ["03-create-your-own-pool/packages/action/state.mjs", "03-create-your-own-pool/packages/action/packet.mjs"], "requiredSignatures": []}
+    },
+    {
+      "obligationId": "v1.topology.documented",
+      "claimIds": ["v1.topology.pf7-prep-settle"],
+      "modality": "provenance",
+      "mandatory": false,
+      "dependencyIds": ["v1.subject.lock-and-quarantine"],
+      "componentIds": ["v1.subject-source"],
+      "oraclePolicy": {"oracleIds": ["v1.oracle.historical-record"], "minimumIndependent": 0},
+      "evidence": {"qualification": false, "allowSynthetic": false, "requiredArtifacts": ["03-create-your-own-pool/packages/prove/authority.mjs", "03-create-your-own-pool/packages/action/prep.mjs"], "requiredSignatures": []}
+    },
+    {
+      "obligationId": "v1.live-instance.non-promoting",
+      "claimIds": ["v1.live-instance.historical"],
+      "modality": "provenance",
+      "mandatory": false,
+      "dependencyIds": ["v1.subject.lock-and-quarantine"],
+      "componentIds": ["v1.subject-source"],
+      "oraclePolicy": {"oracleIds": ["v1.oracle.historical-record"], "minimumIndependent": 0},
+      "evidence": {"qualification": false, "allowSynthetic": false, "requiredArtifacts": ["02-use-chipnet-demo-pool/instance.json", "README.md"], "requiredSignatures": []}
+    },
+    {
+      "obligationId": "v1.cross-version.refusal",
+      "claimIds": ["v1.cross-version.refusal"],
+      "modality": "mutation",
+      "mandatory": false,
+      "dependencyIds": ["v1.encoding.documented", "v1.topology.documented"],
+      "componentIds": ["v1.subject-source"],
+      "oraclePolicy": {"oracleIds": ["v1.oracle.historical-record"], "minimumIndependent": 0},
+      "evidence": {"qualification": false, "allowSynthetic": false, "requiredArtifacts": ["03-create-your-own-pool/packages/profile/legacy.mjs", "03-create-your-own-pool/packages/action/v2/state.test.mjs", "03-create-your-own-pool/packages/action/v2/packet.test.mjs"], "requiredSignatures": []}
+    }
+  ],
+  "tests": [
+    {
+      "testId": "v1.historical.boundary-review",
+      "source": "03-create-your-own-pool/packages/{action/state.mjs,action/packet.mjs,action/prep.mjs,prove/authority.mjs,profile/legacy.mjs}",
+      "executorId": "v1.subject-source",
+      "obligationIds": ["v1.subject.lock-and-quarantine", "v1.encoding.documented", "v1.topology.documented", "v1.live-instance.non-promoting", "v1.cross-version.refusal"],
+      "classification": "historical"
+    }
+  ],
+  "suites": [
+    {
+      "suiteId": "v1.historical.read-only",
+      "obligationIds": ["v1.subject.lock-and-quarantine", "v1.encoding.documented", "v1.topology.documented", "v1.live-instance.non-promoting", "v1.cross-version.refusal"],
+      "testIds": ["v1.historical.boundary-review"]
+    }
+  ],
+  "adapters": [
+    {"componentId": "v1.subject-source", "implementationRoot": "ShieldKit-SDK@2ba14fd", "command": ["git", "show", "2ba14fd7d1d5d0acdd49b97ea3ee77b8ab0ea854"], "capabilities": ["read-only-source-inspection", "no-network", "no-broadcast"]}
+  ],
+  "oracles": [
+    {"oracleId": "v1.oracle.historical-record", "implementationRoot": "ShieldKit-SDK@2ba14fd", "independenceClass": "subject", "command": ["git", "show"], "capabilities": ["historical-boundary-only", "not-qualification"]}
+  ],
+  "generators": [],
+  "mutators": [],
+  "formalModels": [],
+  "backends": [],
+  "trustProfiles": [
+    {"trustProfileId": "v1.setup.development-only", "statement": "Historical V1 setup is development-only and cannot supply V2 Direct setup trust.", "participantIndependenceEstablished": false}
+  ],
+  "releasePolicy": {
+    "requiredSuiteIds": ["v1.historical.read-only"],
+    "requiredAxes": ["historicalReadOnly", "nonRelease", "crossVersionRefusal"],
+    "forbiddenCaseStatuses": ["qualified", "production", "release", "v2-direct-migration"]
+  }
+}

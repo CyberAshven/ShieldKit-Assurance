@@ -1,0 +1,17 @@
+{
+  "name": "shieldkit-assurance-workspace",
+  "version": "0.1.0",
+  "private": true,
+  "license": "MIT",
+  "engines": {
+    "node": ">=22.23.1"
+  },
+  "workspaces": [
+    "packages/*"
+  ],
+  "scripts": {
+    "build": "npm run build --workspace @shieldkit-assurance/sdk",
+    "test": "npm run test --workspace @shieldkit-assurance/sdk",
+    "typecheck": "npm run typecheck --workspace @shieldkit-assurance/sdk"
+  }
+}

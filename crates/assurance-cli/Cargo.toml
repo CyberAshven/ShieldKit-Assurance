@@ -1,0 +1,17 @@
+[package]
+name = "shieldkit-assure"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+repository.workspace = true
+
+[dependencies]
+anyhow.workspace = true
+clap.workspace = true
+schemars.workspace = true
+serde_json.workspace = true
+tempfile.workspace = true
+shieldkit-assurance-core = { path = "../assurance-core" }
+shieldkit-assurance-evidence = { path = "../assurance-evidence" }
+shieldkit-assurance-schema = { path = "../assurance-schema" }

@@ -1,0 +1,492 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "AssurancePack",
+  "type": "object",
+  "properties": {
+    "adapters": {
+      "type": "array",
+      "default": [],
+      "items": {
+        "$ref": "#/$defs/ComponentDefinition"
+      }
+    },
+    "backends": {
+      "type": "array",
+      "default": [],
+      "items": {
+        "$ref": "#/$defs/ComponentDefinition"
+      }
+    },
+    "claims": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/Claim"
+      }
+    },
+    "formalModels": {
+      "type": "array",
+      "default": [],
+      "items": {
+        "$ref": "#/$defs/ComponentDefinition"
+      }
+    },
+    "generators": {
+      "type": "array",
+      "default": [],
+      "items": {
+        "$ref": "#/$defs/ComponentDefinition"
+      }
+    },
+    "mutators": {
+      "type": "array",
+      "default": [],
+      "items": {
+        "$ref": "#/$defs/ComponentDefinition"
+      }
+    },
+    "obligations": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/Obligation"
+      }
+    },
+    "oracles": {
+      "type": "array",
+      "default": [],
+      "items": {
+        "$ref": "#/$defs/OracleDefinition"
+      }
+    },
+    "packId": {
+      "type": "string"
+    },
+    "packVersion": {
+      "type": "string"
+    },
+    "protocolIdentity": {
+      "type": "string"
+    },
+    "releasePolicy": {
+      "$ref": "#/$defs/ReleasePolicy"
+    },
+    "schemaVersion": {
+      "type": "string"
+    },
+    "subject": {
+      "$ref": "#/$defs/Subject"
+    },
+    "suites": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/SuiteDefinition"
+      }
+    },
+    "tests": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/TestDefinition"
+      }
+    },
+    "trustProfiles": {
+      "type": "array",
+      "default": [],
+      "items": {
+        "$ref": "#/$defs/TrustProfile"
+      }
+    }
+  },
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "packId",
+    "packVersion",
+    "protocolIdentity",
+    "subject",
+    "claims",
+    "obligations",
+    "tests",
+    "suites",
+    "releasePolicy"
+  ],
+  "$defs": {
+    "Claim": {
+      "type": "object",
+      "properties": {
+        "applicability": {
+          "type": "string"
+        },
+        "assumptions": {
+          "type": "array",
+          "default": [],
+          "items": {
+            "type": "string"
+          }
+        },
+        "category": {
+          "type": "string"
+        },
+        "claimId": {
+          "type": "string"
+        },
+        "obligationIds": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "severity": {
+          "$ref": "#/$defs/Severity"
+        },
+        "statement": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "claimId",
+        "statement",
+        "category",
+        "severity",
+        "applicability",
+        "obligationIds"
+      ]
+    },
+    "ComponentDefinition": {
+      "type": "object",
+      "properties": {
+        "capabilities": {
+          "type": "array",
+          "default": [],
+          "items": {
+            "type": "string"
+          }
+        },
+        "command": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "componentId": {
+          "type": "string"
+        },
+        "implementationRoot": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "componentId",
+        "implementationRoot",
+        "command"
+      ]
+    },
+    "EvidenceRequirement": {
+      "type": "object",
+      "properties": {
+        "allowSynthetic": {
+          "type": "boolean"
+        },
+        "qualification": {
+          "type": "boolean"
+        },
+        "requiredArtifacts": {
+          "type": "array",
+          "default": [],
+          "items": {
+            "type": "string"
+          }
+        },
+        "requiredSignatures": {
+          "type": "array",
+          "default": [],
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "qualification",
+        "allowSynthetic"
+      ]
+    },
+    "Modality": {
+      "type": "string",
+      "enum": [
+        "vector",
+        "property",
+        "exhaustive",
+        "differential",
+        "metamorphic",
+        "fuzz",
+        "mutation",
+        "formal",
+        "fault",
+        "privacy",
+        "performance",
+        "live",
+        "provenance",
+        "audit",
+        "ux"
+      ]
+    },
+    "Obligation": {
+      "type": "object",
+      "properties": {
+        "claimIds": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "componentIds": {
+          "type": "array",
+          "default": [],
+          "items": {
+            "type": "string"
+          }
+        },
+        "dependencyIds": {
+          "type": "array",
+          "default": [],
+          "items": {
+            "type": "string"
+          }
+        },
+        "evidence": {
+          "$ref": "#/$defs/EvidenceRequirement"
+        },
+        "mandatory": {
+          "type": "boolean"
+        },
+        "modality": {
+          "$ref": "#/$defs/Modality"
+        },
+        "obligationId": {
+          "type": "string"
+        },
+        "oraclePolicy": {
+          "$ref": "#/$defs/OraclePolicy"
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "obligationId",
+        "claimIds",
+        "modality",
+        "mandatory",
+        "oraclePolicy",
+        "evidence"
+      ]
+    },
+    "OracleDefinition": {
+      "type": "object",
+      "properties": {
+        "capabilities": {
+          "type": "array",
+          "default": [],
+          "items": {
+            "type": "string"
+          }
+        },
+        "command": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "implementationRoot": {
+          "type": "string"
+        },
+        "independenceClass": {
+          "type": "string"
+        },
+        "oracleId": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "oracleId",
+        "implementationRoot",
+        "independenceClass",
+        "command"
+      ]
+    },
+    "OraclePolicy": {
+      "type": "object",
+      "properties": {
+        "minimumIndependent": {
+          "type": "integer",
+          "format": "uint32",
+          "minimum": 0
+        },
+        "oracleIds": {
+          "type": "array",
+          "default": [],
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "minimumIndependent"
+      ]
+    },
+    "ReleasePolicy": {
+      "type": "object",
+      "properties": {
+        "forbiddenCaseStatuses": {
+          "type": "array",
+          "default": [],
+          "items": {
+            "type": "string"
+          }
+        },
+        "requiredAxes": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "requiredSuiteIds": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "requiredSuiteIds",
+        "requiredAxes"
+      ]
+    },
+    "Severity": {
+      "type": "string",
+      "enum": [
+        "critical",
+        "high",
+        "medium",
+        "low",
+        "informational"
+      ]
+    },
+    "Subject": {
+      "type": "object",
+      "properties": {
+        "implementationRoots": {
+          "type": "array",
+          "default": [],
+          "items": {
+            "type": "string"
+          }
+        },
+        "repository": {
+          "type": "string"
+        },
+        "revision": {
+          "type": "string"
+        },
+        "tree": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "repository",
+        "revision",
+        "tree"
+      ]
+    },
+    "SuiteDefinition": {
+      "type": "object",
+      "properties": {
+        "obligationIds": {
+          "type": "array",
+          "default": [],
+          "items": {
+            "type": "string"
+          }
+        },
+        "suiteId": {
+          "type": "string"
+        },
+        "testIds": {
+          "type": "array",
+          "default": [],
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "suiteId"
+      ]
+    },
+    "TestClassification": {
+      "type": "string",
+      "enum": [
+        "regression",
+        "independent",
+        "framework_self_test",
+        "historical",
+        "qualification"
+      ]
+    },
+    "TestDefinition": {
+      "type": "object",
+      "properties": {
+        "classification": {
+          "$ref": "#/$defs/TestClassification"
+        },
+        "executorId": {
+          "type": "string"
+        },
+        "obligationIds": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "source": {
+          "type": "string"
+        },
+        "testId": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "testId",
+        "source",
+        "executorId",
+        "obligationIds",
+        "classification"
+      ]
+    },
+    "TrustProfile": {
+      "type": "object",
+      "properties": {
+        "participantIndependenceEstablished": {
+          "type": "boolean"
+        },
+        "statement": {
+          "type": "string"
+        },
+        "trustProfileId": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "trustProfileId",
+        "statement",
+        "participantIndependenceEstablished"
+      ]
+    }
+  }
+}
