@@ -10,6 +10,22 @@ V1, V2, Chipnet, production, audit, or release qualification claim. A stable
 release is permitted only when the terminal requirements in
 [`docs/TERMINAL_REQUIREMENTS.md`](docs/TERMINAL_REQUIREMENTS.md) are satisfied.
 
+The implemented foundation currently includes:
+
+- strict pack and adapter protocols;
+- immutable, object-verified snapshots of pinned Git subjects;
+- a closed-world evidence store and verifier;
+- a network-isolated Bubblewrap execution sandbox;
+- deterministic campaigns, replay, and shrinking;
+- deterministic offline JSON, HTML, JUnit, and SARIF reports;
+- fail-closed mutation, fault-simulation, and privacy-analysis engines;
+- a frozen ShieldKit V1/PF7 historical pack, a V2 Direct obligations pack,
+  and an exhaustive migration ledger for the pinned ShieldKit SDK subject.
+
+These are framework capabilities, not qualification results. The runner,
+independent-oracle integration, complete test migration, and live Chipnet
+qualification remain required before any release verdict can be issued.
+
 The initial commands are:
 
 ```text
